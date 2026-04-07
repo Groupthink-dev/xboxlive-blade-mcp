@@ -1,0 +1,113 @@
+name: xboxlive-blade-mcp
+version: "0.1.0"
+description: "Xbox Live operations — profiles, achievements, friends, presence, game library, SmartGlass console control, Store catalog"
+author: Groupthink-dev
+licence: MIT
+tier: community
+homepage: https://github.com/Groupthink-dev/xboxlive-blade-mcp
+contract: gaming-v1
+
+services:
+  gaming:
+    profile: xbox_profile
+    achievements: xbox_achievements
+    achievement_summary: xbox_achievement_summary
+    games_played: xbox_games
+    games_recent: xbox_games_recent
+    friends: xbox_friends
+    presence: xbox_presence
+    search_users: xbox_search_users
+    achievement_compare: xbox_achievement_compare
+    achievement_groups: xbox_achievement_groups
+    games_purchased: xbox_games_purchased
+    devices: xbox_consoles
+    game_details: xbox_game_details
+    search_games: xbox_search_games
+    send_message: xbox_send_message
+    friend_add: xbox_friend_add
+    friend_remove: xbox_friend_remove
+
+setup:
+  icon: "🎮"
+  blurb: "Connect to Xbox Live for gaming profiles, achievements, friends, console control, and Store catalog."
+  auth_model: oauth2
+  complexity: involved
+  fields:
+    - key: XBOX_CLIENT_ID
+      label: "Azure App Client ID"
+      secret: false
+      placeholder: "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+      required: true
+      help: "Register at portal.azure.com > App registrations with Xbox Live API scope"
+    - key: XBOX_CLIENT_SECRET
+      label: "Azure App Client Secret"
+      secret: true
+      placeholder: "Client secret value"
+      required: false
+      help: "Optional for public client apps. Required for confidential clients."
+    - key: XBOX_TOKEN_PATH
+      label: "Token storage path"
+      secret: false
+      placeholder: "~/.xboxlive-blade-mcp/tokens.json"
+      required: false
+      help: "Where cached OAuth tokens are stored (auto-refreshed). Default: ~/.xboxlive-blade-mcp/tokens.json"
+    - key: XBOX_WRITE_ENABLED
+      label: "Enable write operations"
+      type: boolean
+      secret: false
+      required: false
+      help: "Messaging, friend management, and SmartGlass console commands"
+  test:
+    endpoint: "https://profile.xboxlive.com/users/me/profile/settings"
+    auth_style: xbl3
+  help:
+    - label: "Xbox Live API authentication"
+      url: "https://github.com/OpenXbox/xbox-webapi-python#authentication"
+    - label: "Azure App registration"
+      url: "https://portal.azure.com/#blade/Microsoft_AAD_RegisteredApps"
+    - label: "Xbox Live API scopes"
+      url: "https://learn.microsoft.com/en-us/gaming/gdk/_content/gc/live/get-started/live-xbl-overview"
+  prerequisites:
+    - "Microsoft account with Xbox Live"
+    - "Azure App registration (free)"
+    - "One-time browser login via 'xboxlive-blade-mcp auth'"
+
+install:
+  runtime: uv
+  package: xboxlive-blade-mcp
+  command: xboxlive-blade-mcp
+
+env:
+  - name: XBOX_CLIENT_ID
+    description: "Azure App client ID"
+  - name: XBOX_CLIENT_SECRET
+    description: "Azure App client secret (optional for public clients)"
+    secret: true
+  - name: XBOX_TOKEN_PATH
+    description: "Path to cached OAuth tokens"
+    default: "~/.xboxlive-blade-mcp/tokens.json"
+  - name: XBOX_WRITE_ENABLED
+    description: "Enable write operations (messaging, friend management, SmartGlass)"
+    default: "false"
+  - name: XBOX_MCP_TRANSPORT
+    description: "Transport: stdio (default) or http"
+    default: "stdio"
+  - name: XBOX_MCP_HOST
+    description: "HTTP transport bind host"
+    default: "127.0.0.1"
+  - name: XBOX_MCP_PORT
+    description: "HTTP transport port"
+    default: "8500"
+  - name: XBOX_MCP_API_TOKEN
+    description: "Bearer token for HTTP transport auth"
+    secret: true
+
+requires:
+  sidereal: ">=0.40"
+
+conformance:
+  required: "4/4"
+  recommended: "4/4"
+  optional: "6/6"
+  gated: "3/3"
+  last_tested: null
