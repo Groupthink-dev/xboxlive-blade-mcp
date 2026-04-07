@@ -1,9 +1,9 @@
 name: xboxlive-blade-mcp
 version: "0.1.0"
 description: "Xbox Live operations — profiles, achievements, friends, presence, game library, SmartGlass console control, Store catalog"
-author: Groupthink-dev
+author: groupthink-dev
 licence: MIT
-tier: community
+tier: certified
 homepage: https://github.com/Groupthink-dev/xboxlive-blade-mcp
 contract: gaming-v1
 
