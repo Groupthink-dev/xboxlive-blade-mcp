@@ -1,5 +1,5 @@
 name: xboxlive-blade-mcp
-version: "0.1.0"
+version: "0.1.1"
 description: "Xbox Live operations — profiles, achievements, friends, presence, game library, SmartGlass console control, Store catalog"
 author: groupthink-dev
 licence: MIT
